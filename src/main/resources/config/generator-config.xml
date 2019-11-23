@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mybatis generator 插件生成表模型文件 -->
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <!-- 使用的JDBC类地址 -->
+  <classPathEntry location="src/main/resources/packages/mysql-connector-java-5.1.48.jar"/>
+
+  <context id="library_dev" targetRuntime="MyBatis3" defaultModelType="flat">
+
+    <!-- Mybatis插件 -->
+    <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+    <commentGenerator>
+      <property name="suppressDate" value="true"/>
+      <property name="nullCatalogMeansCurrent" value="true"/>
+      <property name="suppressAllComments" value="true"/>
+      <property name="mergeable" value="true"/>
+    </commentGenerator>
+
+    <!-- jdbc连接 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://fisher.lazybone.xyz:3306/scnu_library?useUnicode=true&amp;characterEncoding=utf-8"
+                    userId="scnusoftware"
+                    password="SCNU@2019"/>
+
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="true"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="com.scnu.library.model.dbModel"
+                        targetProject="src/main/java">
+      <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+      <!--<property name="trimStrings" value="true"/>-->
+      <property name="enableSubPackages" value="false"/>
+    </javaModelGenerator>
+
+    <!-- targetProject:生成PO类的位置 -->
+    <!-- targetPackage:mapper映射文件生成的位置 -->
+    <sqlMapGenerator targetPackage="mapping.auto"
+                     targetProject="src/main/resources">
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+
+    <javaClientGenerator targetPackage="com.scnu.library.mapper"
+                         targetProject="src/main/java" type="XMLMAPPER">
+    </javaClientGenerator>
+
+    <!-- 改schema，改tableName，改domainObjName。先clean再mybatis-gen -->
+    <table schema="scnu_library"
+           tableName="book_des"
+           enableCountByExample="true"
+           enableUpdateByExample="true"
+           enableDeleteByExample="true"
+           enableSelectByExample="true"
+           selectByExampleQueryId="true"
+           domainObjectName="bookDesMain">
+    </table>
+
+  </context>
+</generatorConfiguration>
+
