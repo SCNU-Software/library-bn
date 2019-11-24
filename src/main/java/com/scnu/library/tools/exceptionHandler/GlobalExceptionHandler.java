@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public resultModel exceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
-        return new resultModel();
+    public Exception exceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
+
+        return ex;
     }
 }
