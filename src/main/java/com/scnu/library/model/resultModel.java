@@ -18,8 +18,8 @@ public class resultModel<T> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	// 响应消息
-	private String code = "";
-	private String msg = "";
+	private String code = "0";
+	private String msg = "无消息";
 
 	// 分页参数
 	private int currentPage = 0;

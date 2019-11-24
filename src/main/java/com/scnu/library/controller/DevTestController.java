@@ -19,6 +19,8 @@ import java.util.List;
  * @Author JabinGP
  * @Date 2019-11-24 9:19
  * @Description 开发中的接口，测试使用
+ *
+ * @Edit Fisher@2019-11-24: 修改拼写错误，donaloadExcel -> downloadExcel
  */
 
 @RestController
@@ -49,7 +51,7 @@ public class DevTestController {
      * @return 无数据的200ok响应模板
      */
     @GetMapping(value = "/excel/import")
-    public Object donaloadExcel(){
+    public Object downloadExcel(){
         // 指定文件路径
         String fileName = "/Users/jabin/code/tmp/readBook.xls";
 

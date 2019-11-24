@@ -19,4 +19,9 @@ public class commonEnum {
 
     // Swagger API 版本
     public static final String SWAGGER_VERSION = "0.1";
+
+    // Service层返回结果的Map Key
+    public static final String RESULT_MAP_LIST = "resList";
+    public static final String RESULT_MAP_CURRENT_PAGE = "currentPage";
+    public static final String RESULT_MAP_TOTAL_PAGE = "totalPage";
 }
