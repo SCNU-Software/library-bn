@@ -23,6 +23,8 @@ import java.util.Map;
 /**
  * @Author: Fisher
  * @Date: 2019/11/24 12:58
+ *
+ * @Edite: JabinGP@2019/11/25：修改两处模糊查找漏%
  */
 
 @Repository
@@ -42,12 +44,12 @@ public class bookDesServiceImpl implements bookDesService {
 
             // 需要根据标题查询
             if ( requestModel.getTitle()!=null && !"".equals(requestModel.getTitle()) ) {
-                criteria.andTitleLike(requestModel.getTitle());
+                criteria.andTitleLike('%'+requestModel.getTitle()+'%');
             }
 
             // 需要根据作者查询
             if ( requestModel.getAuthor()!=null && !"".equals(requestModel.getAuthor()) ) {
-                criteria.andAuthorLike(requestModel.getAuthor());
+                criteria.andAuthorLike('%'+requestModel.getAuthor()+'%');
             }
 
             // 分页支持

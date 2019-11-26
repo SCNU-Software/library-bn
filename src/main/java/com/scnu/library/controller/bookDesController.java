@@ -23,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/bookdes")
 @Slf4j
+@CrossOrigin(allowCredentials = "true")
 public class bookDesController {
 
     @Autowired

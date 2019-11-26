@@ -5,9 +5,10 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
 import com.scnu.library.mapper.bookDesMainMapper;
 import com.scnu.library.model.dbModel.bookDesMain;
+import com.scnu.library.model.excelMode.bookExcelModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.parameters.P;
+import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,13 @@ import java.util.List;
  * @Description Excel读取的回调类，在这里构建一个定长动态列表，列表满一次则存一次数据库，直至所有数据读取完成
  */
 
-public class ExcelReadListener extends AnalysisEventListener<bookDesMain> {
+public class ExcelReadListener extends AnalysisEventListener<bookExcelModel> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelReadListener.class);
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 3000;
-    List<bookDesMain> list = new ArrayList<bookDesMain>();
+    List<bookExcelModel> list = new ArrayList<bookExcelModel>();
 
     /**
      * bookDao，数据持久化
@@ -51,7 +52,7 @@ public class ExcelReadListener extends AnalysisEventListener<bookDesMain> {
      * @param context
      */
     @Override
-    public void invoke(bookDesMain data, AnalysisContext context) {
+    public void invoke(bookExcelModel data, AnalysisContext context) {
         LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
 
@@ -83,7 +84,10 @@ public class ExcelReadListener extends AnalysisEventListener<bookDesMain> {
         for(int i=0;i<list.size();i++){
             // 避免与自增主键冲突
             list.get(i).setId(null);
-            bookDao.insertSelective(list.get(i));
+            bookDesMain bookModel = new bookDesMain();
+            LOGGER.info(JSON.toJSONString(list.get(i)));
+            BeanUtils.copyProperties(list.get(i), bookModel);
+            bookDao.insertSelective(bookModel);
         }
         LOGGER.info("存储数据库成功！");
     }
