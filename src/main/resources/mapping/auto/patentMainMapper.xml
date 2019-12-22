@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scnu.library.mapper.patentMainMapper">
+  <resultMap id="BaseResultMap" type="com.scnu.library.model.dbModel.patentMain">
+    <id column="no" jdbcType="INTEGER" property="no" />
+    <result column="patent_country" jdbcType="VARCHAR" property="patentCountry" />
+    <result column="patent_type" jdbcType="VARCHAR" property="patentType" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="publish_no" jdbcType="VARCHAR" property="publishNo" />
+    <result column="publish_date" jdbcType="DATE" property="publishDate" />
+    <result column="application_no" jdbcType="VARCHAR" property="applicationNo" />
+    <result column="application_date" jdbcType="DATE" property="applicationDate" />
+    <result column="main_category" jdbcType="VARCHAR" property="mainCategory" />
+    <result column="sub_category" jdbcType="VARCHAR" property="subCategory" />
+    <result column="applicant" jdbcType="VARCHAR" property="applicant" />
+    <result column="inventor" jdbcType="VARCHAR" property="inventor" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="patent_agency" jdbcType="VARCHAR" property="patentAgency" />
+    <result column="agent" jdbcType="VARCHAR" property="agent" />
+    <result column="legal_status" jdbcType="VARCHAR" property="legalStatus" />
+    <result column="patent_status" jdbcType="VARCHAR" property="patentStatus" />
+    <result column="secondary_institution" jdbcType="VARCHAR" property="secondaryInstitution" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    no, patent_country, patent_type, name, publish_no, publish_date, application_no, 
+    application_date, main_category, sub_category, applicant, inventor, country_code, 
+    address, patent_agency, agent, legal_status, patent_status, secondary_institution
+  </sql>
+  <select id="selectByExample" parameterType="com.scnu.library.model.dbModel.patentMainExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from patent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patent
+    where no = #{no,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from patent
+    where no = #{no,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scnu.library.model.dbModel.patentMainExample">
+    delete from patent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scnu.library.model.dbModel.patentMain">
+    insert into patent (no, patent_country, patent_type, 
+      name, publish_no, publish_date, 
+      application_no, application_date, main_category, 
+      sub_category, applicant, inventor, 
+      country_code, address, patent_agency, 
+      agent, legal_status, patent_status, 
+      secondary_institution)
+    values (#{no,jdbcType=INTEGER}, #{patentCountry,jdbcType=VARCHAR}, #{patentType,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{publishNo,jdbcType=VARCHAR}, #{publishDate,jdbcType=DATE}, 
+      #{applicationNo,jdbcType=VARCHAR}, #{applicationDate,jdbcType=DATE}, #{mainCategory,jdbcType=VARCHAR}, 
+      #{subCategory,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR}, #{inventor,jdbcType=VARCHAR}, 
+      #{countryCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{patentAgency,jdbcType=VARCHAR}, 
+      #{agent,jdbcType=VARCHAR}, #{legalStatus,jdbcType=VARCHAR}, #{patentStatus,jdbcType=VARCHAR}, 
+      #{secondaryInstitution,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.scnu.library.model.dbModel.patentMain">
+    insert into patent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="no != null">
+        no,
+      </if>
+      <if test="patentCountry != null">
+        patent_country,
+      </if>
+      <if test="patentType != null">
+        patent_type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="publishNo != null">
+        publish_no,
+      </if>
+      <if test="publishDate != null">
+        publish_date,
+      </if>
+      <if test="applicationNo != null">
+        application_no,
+      </if>
+      <if test="applicationDate != null">
+        application_date,
+      </if>
+      <if test="mainCategory != null">
+        main_category,
+      </if>
+      <if test="subCategory != null">
+        sub_category,
+      </if>
+      <if test="applicant != null">
+        applicant,
+      </if>
+      <if test="inventor != null">
+        inventor,
+      </if>
+      <if test="countryCode != null">
+        country_code,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="patentAgency != null">
+        patent_agency,
+      </if>
+      <if test="agent != null">
+        agent,
+      </if>
+      <if test="legalStatus != null">
+        legal_status,
+      </if>
+      <if test="patentStatus != null">
+        patent_status,
+      </if>
+      <if test="secondaryInstitution != null">
+        secondary_institution,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="no != null">
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="patentCountry != null">
+        #{patentCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="patentType != null">
+        #{patentType,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="publishNo != null">
+        #{publishNo,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        #{publishDate,jdbcType=DATE},
+      </if>
+      <if test="applicationNo != null">
+        #{applicationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null">
+        #{applicationDate,jdbcType=DATE},
+      </if>
+      <if test="mainCategory != null">
+        #{mainCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="subCategory != null">
+        #{subCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null">
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="inventor != null">
+        #{inventor,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null">
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="patentAgency != null">
+        #{patentAgency,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null">
+        #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="legalStatus != null">
+        #{legalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="patentStatus != null">
+        #{patentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryInstitution != null">
+        #{secondaryInstitution,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scnu.library.model.dbModel.patentMainExample" resultType="java.lang.Long">
+    select count(*) from patent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update patent
+    <set>
+      <if test="record.no != null">
+        no = #{record.no,jdbcType=INTEGER},
+      </if>
+      <if test="record.patentCountry != null">
+        patent_country = #{record.patentCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patentType != null">
+        patent_type = #{record.patentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishNo != null">
+        publish_no = #{record.publishNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishDate != null">
+        publish_date = #{record.publishDate,jdbcType=DATE},
+      </if>
+      <if test="record.applicationNo != null">
+        application_no = #{record.applicationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationDate != null">
+        application_date = #{record.applicationDate,jdbcType=DATE},
+      </if>
+      <if test="record.mainCategory != null">
+        main_category = #{record.mainCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subCategory != null">
+        sub_category = #{record.subCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null">
+        applicant = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inventor != null">
+        inventor = #{record.inventor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryCode != null">
+        country_code = #{record.countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patentAgency != null">
+        patent_agency = #{record.patentAgency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agent != null">
+        agent = #{record.agent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalStatus != null">
+        legal_status = #{record.legalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patentStatus != null">
+        patent_status = #{record.patentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondaryInstitution != null">
+        secondary_institution = #{record.secondaryInstitution,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update patent
+    set no = #{record.no,jdbcType=INTEGER},
+      patent_country = #{record.patentCountry,jdbcType=VARCHAR},
+      patent_type = #{record.patentType,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      publish_no = #{record.publishNo,jdbcType=VARCHAR},
+      publish_date = #{record.publishDate,jdbcType=DATE},
+      application_no = #{record.applicationNo,jdbcType=VARCHAR},
+      application_date = #{record.applicationDate,jdbcType=DATE},
+      main_category = #{record.mainCategory,jdbcType=VARCHAR},
+      sub_category = #{record.subCategory,jdbcType=VARCHAR},
+      applicant = #{record.applicant,jdbcType=VARCHAR},
+      inventor = #{record.inventor,jdbcType=VARCHAR},
+      country_code = #{record.countryCode,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      patent_agency = #{record.patentAgency,jdbcType=VARCHAR},
+      agent = #{record.agent,jdbcType=VARCHAR},
+      legal_status = #{record.legalStatus,jdbcType=VARCHAR},
+      patent_status = #{record.patentStatus,jdbcType=VARCHAR},
+      secondary_institution = #{record.secondaryInstitution,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scnu.library.model.dbModel.patentMain">
+    update patent
+    <set>
+      <if test="patentCountry != null">
+        patent_country = #{patentCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="patentType != null">
+        patent_type = #{patentType,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="publishNo != null">
+        publish_no = #{publishNo,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        publish_date = #{publishDate,jdbcType=DATE},
+      </if>
+      <if test="applicationNo != null">
+        application_no = #{applicationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null">
+        application_date = #{applicationDate,jdbcType=DATE},
+      </if>
+      <if test="mainCategory != null">
+        main_category = #{mainCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="subCategory != null">
+        sub_category = #{subCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null">
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="inventor != null">
+        inventor = #{inventor,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null">
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="patentAgency != null">
+        patent_agency = #{patentAgency,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null">
+        agent = #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="legalStatus != null">
+        legal_status = #{legalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="patentStatus != null">
+        patent_status = #{patentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="secondaryInstitution != null">
+        secondary_institution = #{secondaryInstitution,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scnu.library.model.dbModel.patentMain">
+    update patent
+    set patent_country = #{patentCountry,jdbcType=VARCHAR},
+      patent_type = #{patentType,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      publish_no = #{publishNo,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=DATE},
+      application_no = #{applicationNo,jdbcType=VARCHAR},
+      application_date = #{applicationDate,jdbcType=DATE},
+      main_category = #{mainCategory,jdbcType=VARCHAR},
+      sub_category = #{subCategory,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      inventor = #{inventor,jdbcType=VARCHAR},
+      country_code = #{countryCode,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      patent_agency = #{patentAgency,jdbcType=VARCHAR},
+      agent = #{agent,jdbcType=VARCHAR},
+      legal_status = #{legalStatus,jdbcType=VARCHAR},
+      patent_status = #{patentStatus,jdbcType=VARCHAR},
+      secondary_institution = #{secondaryInstitution,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=INTEGER}
+  </update>
+</mapper>

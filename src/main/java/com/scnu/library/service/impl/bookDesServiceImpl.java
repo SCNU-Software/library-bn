@@ -5,9 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.scnu.library.mapper.bookDesMainMapper;
 import com.scnu.library.model.dbModel.bookDesMain;
 import com.scnu.library.model.dbModel.bookDesMainExample;
+import com.scnu.library.model.requestModel.alterBookDesReq;
+import com.scnu.library.model.requestModel.deleteBookDesReq;
 import com.scnu.library.model.requestModel.getBookDesReq;
 import com.scnu.library.model.responseModel.getBookDesRes;
-import com.scnu.library.model.resultModel;
 import com.scnu.library.service.bookDesService;
 import com.scnu.library.tools.enums.commonEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,8 @@ import java.util.Map;
  * @Author: Fisher
  * @Date: 2019/11/24 12:58
  *
- * @Edite: JabinGP@2019/11/25：修改两处模糊查找漏%
+ * @Edit: JabinGP@2019/11/25：修改两处模糊查找漏%
+ * @Edit: Fisher@2019-12-22: 增加修改书本信息，添加单条书本信息，删除书本信息接口
  */
 
 @Repository
@@ -72,6 +74,43 @@ public class bookDesServiceImpl implements bookDesService {
             throw new RuntimeException(e.getMessage());
         } finally {
             return resMap;
+        }
+    }
+
+    @Override
+    public boolean addBookDes(alterBookDesReq requestModel) {
+        try {
+            bookDesMain model = new bookDesMain();
+            BeanUtils.copyProperties(requestModel, model);
+            bookDesMapper.insertSelective(model);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public getBookDesRes alterBookDes(alterBookDesReq requestModel) {
+        try {
+            bookDesMain model = new bookDesMain();
+            BeanUtils.copyProperties(requestModel, model);
+            bookDesMapper.updateByPrimaryKeyWithBLOBs(model);
+            // 返回更新后的数据
+            getBookDesRes res = new getBookDesRes();
+            BeanUtils.copyProperties(model, res);
+            return res;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean deleteBookDes(deleteBookDesReq requestModel) {
+        try {
+            bookDesMapper.deleteByPrimaryKey(requestModel.getId());
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

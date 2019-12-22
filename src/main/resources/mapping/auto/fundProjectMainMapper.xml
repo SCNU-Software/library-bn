@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scnu.library.mapper.fundProjectMainMapper">
+  <resultMap id="BaseResultMap" type="com.scnu.library.model.dbModel.fundProjectMain">
+    <id column="no" jdbcType="VARCHAR" property="no" />
+    <result column="project_category" jdbcType="VARCHAR" property="projectCategory" />
+    <result column="subject_category" jdbcType="VARCHAR" property="subjectCategory" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="project_date" jdbcType="DATE" property="projectDate" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+    <result column="job_title" jdbcType="VARCHAR" property="jobTitle" />
+    <result column="main_employer" jdbcType="VARCHAR" property="mainEmployer" />
+    <result column="sub_employer" jdbcType="VARCHAR" property="subEmployer" />
+    <result column="fund_level" jdbcType="VARCHAR" property="fundLevel" />
+    <result column="amount" jdbcType="REAL" property="amount" />
+    <result column="faculty" jdbcType="VARCHAR" property="faculty" />
+    <result column="subject_no" jdbcType="VARCHAR" property="subjectNo" />
+    <result column="exec_time" jdbcType="DATE" property="execTime" />
+    <result column="owning_system" jdbcType="VARCHAR" property="owningSystem" />
+    <result column="result_name" jdbcType="VARCHAR" property="resultName" />
+    <result column="result_type" jdbcType="VARCHAR" property="resultType" />
+    <result column="result_level" jdbcType="VARCHAR" property="resultLevel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    no, project_category, subject_category, name, project_date, principal, job_title, 
+    main_employer, sub_employer, fund_level, amount, faculty, subject_no, exec_time, 
+    owning_system, result_name, result_type, result_level
+  </sql>
+  <select id="selectByExample" parameterType="com.scnu.library.model.dbModel.fundProjectMainExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fund_project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fund_project
+    where no = #{no,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from fund_project
+    where no = #{no,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.scnu.library.model.dbModel.fundProjectMainExample">
+    delete from fund_project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.scnu.library.model.dbModel.fundProjectMain">
+    insert into fund_project (no, project_category, subject_category, 
+      name, project_date, principal, 
+      job_title, main_employer, sub_employer, 
+      fund_level, amount, faculty, 
+      subject_no, exec_time, owning_system, 
+      result_name, result_type, result_level
+      )
+    values (#{no,jdbcType=VARCHAR}, #{projectCategory,jdbcType=VARCHAR}, #{subjectCategory,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{projectDate,jdbcType=DATE}, #{principal,jdbcType=VARCHAR}, 
+      #{jobTitle,jdbcType=VARCHAR}, #{mainEmployer,jdbcType=VARCHAR}, #{subEmployer,jdbcType=VARCHAR}, 
+      #{fundLevel,jdbcType=VARCHAR}, #{amount,jdbcType=REAL}, #{faculty,jdbcType=VARCHAR}, 
+      #{subjectNo,jdbcType=VARCHAR}, #{execTime,jdbcType=DATE}, #{owningSystem,jdbcType=VARCHAR}, 
+      #{resultName,jdbcType=VARCHAR}, #{resultType,jdbcType=VARCHAR}, #{resultLevel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.scnu.library.model.dbModel.fundProjectMain">
+    insert into fund_project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="no != null">
+        no,
+      </if>
+      <if test="projectCategory != null">
+        project_category,
+      </if>
+      <if test="subjectCategory != null">
+        subject_category,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="projectDate != null">
+        project_date,
+      </if>
+      <if test="principal != null">
+        principal,
+      </if>
+      <if test="jobTitle != null">
+        job_title,
+      </if>
+      <if test="mainEmployer != null">
+        main_employer,
+      </if>
+      <if test="subEmployer != null">
+        sub_employer,
+      </if>
+      <if test="fundLevel != null">
+        fund_level,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="faculty != null">
+        faculty,
+      </if>
+      <if test="subjectNo != null">
+        subject_no,
+      </if>
+      <if test="execTime != null">
+        exec_time,
+      </if>
+      <if test="owningSystem != null">
+        owning_system,
+      </if>
+      <if test="resultName != null">
+        result_name,
+      </if>
+      <if test="resultType != null">
+        result_type,
+      </if>
+      <if test="resultLevel != null">
+        result_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="no != null">
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategory != null">
+        #{projectCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCategory != null">
+        #{subjectCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDate != null">
+        #{projectDate,jdbcType=DATE},
+      </if>
+      <if test="principal != null">
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null">
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mainEmployer != null">
+        #{mainEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="subEmployer != null">
+        #{subEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="fundLevel != null">
+        #{fundLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=REAL},
+      </if>
+      <if test="faculty != null">
+        #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null">
+        #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="execTime != null">
+        #{execTime,jdbcType=DATE},
+      </if>
+      <if test="owningSystem != null">
+        #{owningSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="resultName != null">
+        #{resultName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultType != null">
+        #{resultType,jdbcType=VARCHAR},
+      </if>
+      <if test="resultLevel != null">
+        #{resultLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.scnu.library.model.dbModel.fundProjectMainExample" resultType="java.lang.Long">
+    select count(*) from fund_project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update fund_project
+    <set>
+      <if test="record.no != null">
+        no = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCategory != null">
+        project_category = #{record.projectCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectCategory != null">
+        subject_category = #{record.subjectCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectDate != null">
+        project_date = #{record.projectDate,jdbcType=DATE},
+      </if>
+      <if test="record.principal != null">
+        principal = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobTitle != null">
+        job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainEmployer != null">
+        main_employer = #{record.mainEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subEmployer != null">
+        sub_employer = #{record.subEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundLevel != null">
+        fund_level = #{record.fundLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=REAL},
+      </if>
+      <if test="record.faculty != null">
+        faculty = #{record.faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectNo != null">
+        subject_no = #{record.subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execTime != null">
+        exec_time = #{record.execTime,jdbcType=DATE},
+      </if>
+      <if test="record.owningSystem != null">
+        owning_system = #{record.owningSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultName != null">
+        result_name = #{record.resultName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultType != null">
+        result_type = #{record.resultType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultLevel != null">
+        result_level = #{record.resultLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update fund_project
+    set no = #{record.no,jdbcType=VARCHAR},
+      project_category = #{record.projectCategory,jdbcType=VARCHAR},
+      subject_category = #{record.subjectCategory,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      project_date = #{record.projectDate,jdbcType=DATE},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      main_employer = #{record.mainEmployer,jdbcType=VARCHAR},
+      sub_employer = #{record.subEmployer,jdbcType=VARCHAR},
+      fund_level = #{record.fundLevel,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=REAL},
+      faculty = #{record.faculty,jdbcType=VARCHAR},
+      subject_no = #{record.subjectNo,jdbcType=VARCHAR},
+      exec_time = #{record.execTime,jdbcType=DATE},
+      owning_system = #{record.owningSystem,jdbcType=VARCHAR},
+      result_name = #{record.resultName,jdbcType=VARCHAR},
+      result_type = #{record.resultType,jdbcType=VARCHAR},
+      result_level = #{record.resultLevel,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.scnu.library.model.dbModel.fundProjectMain">
+    update fund_project
+    <set>
+      <if test="projectCategory != null">
+        project_category = #{projectCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCategory != null">
+        subject_category = #{subjectCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDate != null">
+        project_date = #{projectDate,jdbcType=DATE},
+      </if>
+      <if test="principal != null">
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null">
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mainEmployer != null">
+        main_employer = #{mainEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="subEmployer != null">
+        sub_employer = #{subEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="fundLevel != null">
+        fund_level = #{fundLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=REAL},
+      </if>
+      <if test="faculty != null">
+        faculty = #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectNo != null">
+        subject_no = #{subjectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="execTime != null">
+        exec_time = #{execTime,jdbcType=DATE},
+      </if>
+      <if test="owningSystem != null">
+        owning_system = #{owningSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="resultName != null">
+        result_name = #{resultName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultType != null">
+        result_type = #{resultType,jdbcType=VARCHAR},
+      </if>
+      <if test="resultLevel != null">
+        result_level = #{resultLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.scnu.library.model.dbModel.fundProjectMain">
+    update fund_project
+    set project_category = #{projectCategory,jdbcType=VARCHAR},
+      subject_category = #{subjectCategory,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      project_date = #{projectDate,jdbcType=DATE},
+      principal = #{principal,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      main_employer = #{mainEmployer,jdbcType=VARCHAR},
+      sub_employer = #{subEmployer,jdbcType=VARCHAR},
+      fund_level = #{fundLevel,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=REAL},
+      faculty = #{faculty,jdbcType=VARCHAR},
+      subject_no = #{subjectNo,jdbcType=VARCHAR},
+      exec_time = #{execTime,jdbcType=DATE},
+      owning_system = #{owningSystem,jdbcType=VARCHAR},
+      result_name = #{resultName,jdbcType=VARCHAR},
+      result_type = #{resultType,jdbcType=VARCHAR},
+      result_level = #{resultLevel,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=VARCHAR}
+  </update>
+</mapper>

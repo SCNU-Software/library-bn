@@ -50,13 +50,13 @@
 
     <!-- 改schema，改tableName，改domainObjName。先clean再mybatis-gen -->
     <table schema="scnu_library"
-           tableName="book_des"
+           tableName="patent"
            enableCountByExample="true"
            enableUpdateByExample="true"
            enableDeleteByExample="true"
            enableSelectByExample="true"
            selectByExampleQueryId="true"
-           domainObjectName="bookDesMain">
+           domainObjectName="patentMain">
     </table>
 
   </context>
