@@ -34,13 +34,14 @@ import java.util.Map;
 /**
  * @Author JabinGP
  * @Date 2019-11-26 20:57
+ *
+ * @Edit: Fisher@2019-12-23: 由于配置了全局的CORS Filter，删除@CrossOrigin注解
  */
 
 @Api(value = "Excel Controller")
 @RestController
 @RequestMapping(value = "/api/excel")
 @Slf4j
-@CrossOrigin(allowCredentials = "true")
 public class excelController {
     @Autowired
     private bookDesService bookDesService;

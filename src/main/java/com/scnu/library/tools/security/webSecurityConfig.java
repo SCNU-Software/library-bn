@@ -22,9 +22,6 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${loginProcessURL}")
     private String loginProcessURL;
 
-    @Value("${loginEntryURL}")
-    private String loginEntryURL;
-
     @Autowired
     private authFailHandler authFailHandler;
 
@@ -45,10 +42,10 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(loginEntryHandler)    // 检测到请求不带登陆Session后跳转到登陆页面
             .and()
             .authorizeRequests()    // 对请求授权
-            .antMatchers(loginEntryURL, loginProcessURL).permitAll()    // 不需要授权的白名单
+            .antMatchers(loginProcessURL).permitAll()    // 不需要授权的白名单
             .anyRequest().authenticated()   // 所有不在白名单中的请求都需要登陆验证
             .and()
-            .csrf().disable();  // 关闭CSRF跨站检测
+            .csrf().disable().cors();  // 关闭CSRF跨站检测，使用CORS解决跨域问题
     }
 
     @Override

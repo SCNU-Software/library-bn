@@ -17,21 +17,17 @@ import java.io.Writer;
 /**
  * @Author: Fisher
  * @Date: 2019/12/23 13:03
- * @Description: 用户未登陆或登陆过期时，自动跳转到登陆页面
+ * @Description: 用户未登陆或登陆过期返回错误信息
  */
 
 @Component
 public class loginEntryHandler implements AuthenticationEntryPoint {
 
-    @Value("${loginEntryURL}")
-    private String loginEntryURL;
-
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        httpServletResponse.sendRedirect(loginEntryURL);
-//        resultModel res = new resultModel(responseEnum.NO_LOGIN_ERR, responseEnum.NO_LOGIN_ERR_MSG);
-//        httpServletResponse.setContentType("application/json;charset=utf-8");
-//        Writer writer = httpServletResponse.getWriter();
-//        writer.write(JSON.toJSONString(res));
+        resultModel res = new resultModel(responseEnum.NO_LOGIN_ERR, responseEnum.NO_LOGIN_ERR_MSG);
+        httpServletResponse.setContentType("application/json;charset=utf-8");
+        Writer writer = httpServletResponse.getWriter();
+        writer.write(JSON.toJSONString(res));
     }
 }

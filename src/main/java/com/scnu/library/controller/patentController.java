@@ -20,13 +20,14 @@ import java.util.Map;
 /**
  * @Author: Fisher
  * @Date: 2019/12/22 11:23
+ *
+ * @Edit: Fisher@2019-12-23: 由于配置了全局的CORS Filter，删除@CrossOrigin注解
  */
 
 @Api(value = "Patent Controller")
 @RestController
 @RequestMapping(value = "api/patent")
 @Slf4j
-@CrossOrigin(allowCredentials = "true")
 public class patentController {
 
     @Autowired
