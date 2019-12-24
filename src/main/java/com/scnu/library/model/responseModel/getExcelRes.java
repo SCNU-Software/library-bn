@@ -4,9 +4,9 @@ import lombok.Data;
 
 /**
  * @Author: JabinGP
- * @Date: 2019/11/26 10:22
  */
 
 @Data
-public class importExcelRes {
+public class getExcelRes {
+    private String url;
 }

@@ -3,12 +3,8 @@ package com.scnu.library.listener;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
-import com.scnu.library.mapper.bookDesMainMapper;
-import com.scnu.library.model.dbModel.bookDesMain;
-import com.scnu.library.model.excelMode.bookExcelModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,32 +12,33 @@ import java.util.List;
 /**
  * @Author: JabinGP
  * @Date: 2019-11-24 9:18
- * @Description Excel读取的回调类，在这里构建一个定长动态列表，列表满一次则存一次数据库，直至所有数据读取完成
+ * @Description Excel读取的回调类，T是数据类型，K是Service类型，在这里构建一个定长动态列表，列表满一次则存一次数据库，直至所有数据读取完成
  */
 
-public class ExcelReadListener extends AnalysisEventListener<bookExcelModel> {
+public class ExcelReadListener<T> extends AnalysisEventListener<T> {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelReadListener.class);
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 3000;
-    List<bookExcelModel> list = new ArrayList<bookExcelModel>();
+    List<T> list = new ArrayList<T>();
 
     /**
-     * bookDao，数据持久化
+     * saver，数据持久化
      */
-    private bookDesMainMapper bookDao;
+    private ExcelSaver saver;
 
     public ExcelReadListener() {
 
     }
 
     /**
-     * 带dao构造，需要传入SpringBoot管理的dao
-     * @param bookDao
+     * 带saver构造，需要传入实现了ExcelSaver的实例
+     * @param saver
      */
-    public ExcelReadListener(bookDesMainMapper bookDao) {
-        this.bookDao = bookDao;
+    public ExcelReadListener(ExcelSaver saver) {
+        this.saver = saver;
     }
 
     /**
@@ -52,7 +49,7 @@ public class ExcelReadListener extends AnalysisEventListener<bookExcelModel> {
      * @param context
      */
     @Override
-    public void invoke(bookExcelModel data, AnalysisContext context) {
+    public void invoke(T data, AnalysisContext context) {
         LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
 
@@ -82,12 +79,8 @@ public class ExcelReadListener extends AnalysisEventListener<bookExcelModel> {
     private void saveData() {
         LOGGER.info("{}条数据，开始存储数据库！", list.size());
         for(int i=0;i<list.size();i++){
-            // 避免与自增主键冲突
-            list.get(i).setId(null);
-            bookDesMain bookModel = new bookDesMain();
             LOGGER.info(JSON.toJSONString(list.get(i)));
-            BeanUtils.copyProperties(list.get(i), bookModel);
-            bookDao.insertSelective(bookModel);
+            saver.save(list.get(i));
         }
         LOGGER.info("存储数据库成功！");
     }

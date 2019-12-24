@@ -12,7 +12,7 @@ import java.util.Date;
  */
 
 @Data
-public class bookExcelModel {
+public class bookExcelModel{
     @ExcelProperty("编号")
     private Integer id;
     @ExcelProperty("书名")

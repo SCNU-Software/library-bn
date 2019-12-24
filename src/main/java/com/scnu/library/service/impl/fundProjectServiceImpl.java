@@ -91,7 +91,7 @@ public class fundProjectServiceImpl implements fundProjectService {
             PageHelper.startPage(requestModel.getPageNo(), requestModel.getPageSize());
 
             // 执行查询
-            List<fundProjectMain> list = new LinkedList<>();
+            List<fundProjectMain> list = fundProjectMapper.selectByExample(fundProjectExample);
             PageInfo<fundProjectMain> pageInfo = new PageInfo<>(list);
 
             // 打包结果

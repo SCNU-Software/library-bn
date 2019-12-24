@@ -46,25 +46,25 @@ public class DevTestController {
         return new resultModel<>("200","ok",all);
     }
 
-    /**
-     * 从某个本地xls文件导入数据到数据库
-     * @return 无数据的200ok响应模板
-     */
-    @GetMapping(value = "/excel/import")
-    public Object downloadExcel(){
-        // 指定文件路径
-        String fileName = "/Users/jabin/code/tmp/readBook.xls";
-
-        // 读取并写入数据库
-        ExcelReader excelReader = EasyExcel.read(fileName, bookDesMain.class, new ExcelReadListener(bookDao)).build();
-        ReadSheet readSheet = EasyExcel.readSheet(0).build();
-        excelReader.read(readSheet);
-
-        // 这里千万别忘记关闭，读的时候会创建临时文件，到时磁盘会崩的
-        excelReader.finish();
-
-        return new resultModel<String>("200","ok",null);
-    }
+//    /**
+//     * 从某个本地xls文件导入数据到数据库
+//     * @return 无数据的200ok响应模板
+//     */
+//    @GetMapping(value = "/excel/import")
+//    public Object downloadExcel(){
+//        // 指定文件路径
+//        String fileName = "/Users/jabin/code/tmp/readBook.xls";
+//
+//        // 读取并写入数据库
+//        ExcelReader excelReader = EasyExcel.read(fileName, bookDesMain.class, new ExcelReadListener(bookDao)).build();
+//        ReadSheet readSheet = EasyExcel.readSheet(0).build();
+//        excelReader.read(readSheet);
+//
+//        // 这里千万别忘记关闭，读的时候会创建临时文件，到时磁盘会崩的
+//        excelReader.finish();
+//
+//        return new resultModel<String>("200","ok",null);
+//    }
 
 
     /**
