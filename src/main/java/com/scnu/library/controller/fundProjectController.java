@@ -20,13 +20,14 @@ import java.util.Map;
 /**
  * @Author: Fisher
  * @Date: 2019/12/22 15:06
+ *
+ * * @Edit: Fisher@2019-12-23: 由于配置了全局的CORS Filter，删除@CrossOrigin注解
  */
 
 @Api(value = "Fund Project Controller")
 @RestController
 @RequestMapping(value = "/api/fundproject")
 @Slf4j
-@CrossOrigin(allowCredentials = "true")
 public class fundProjectController {
 
     @Autowired

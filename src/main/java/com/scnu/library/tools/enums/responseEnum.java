@@ -32,8 +32,16 @@ public class responseEnum {
     public static final String RUNTIME_ERR = "404";
     public static final String RUNTIME_ERR_MSG = "业务处理错误";
 
+    // 用户名或密码错误
+    public static final String LOGIN_ERR = "405";
+    public static final String LOGIN_ERR_MSG = "用户名或密码错误";
+
+    // 未登陆或登陆过期
+    public static final String NO_LOGIN_ERR = "406";
+    public static final String NO_LOGIN_ERR_MSG = "用户未登陆或登陆信息过期";
+
     // 其他未处理的异常
-    public static final String OTHER_ERR = "405";
+    public static final String OTHER_ERR = "410";
     public static final String OTHER_ERR_MSG = "其他服务器内部错误";
 
 }

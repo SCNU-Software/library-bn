@@ -23,13 +23,13 @@ import java.util.Map;
  * @Date: 2019/11/24 16:03
  *
  * @Edit: Fisher@2019-12-22: 增加修改书本信息，添加单条书本信息，删除书本信息接口
+ * @Edit: Fisher@2019-12-23: 由于配置了全局的CORS Filter，删除@CrossOrigin注解
  */
 
 @Api(value = "Book Des Controller")
 @RestController
 @RequestMapping(value = "/api/bookdes")
 @Slf4j
-@CrossOrigin(allowCredentials = "true")
 public class bookDesController {
 
     @Autowired
