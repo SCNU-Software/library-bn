@@ -1,6 +1,7 @@
 package com.scnu.library.model.requestModel;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -23,10 +24,12 @@ public class alterPatentReq {
 
     private String publishNo;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishDate;
 
     private String applicationNo;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date applicationDate;
 
     private String mainCategory;

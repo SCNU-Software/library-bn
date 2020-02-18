@@ -1,6 +1,7 @@
 package com.scnu.library.model.requestModel;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public class alterBookDesReq {
     private String author;
     private Integer price;
     private String press;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date pubTime;
     private String brief;
 }

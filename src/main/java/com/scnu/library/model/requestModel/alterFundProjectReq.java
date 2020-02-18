@@ -1,6 +1,7 @@
 package com.scnu.library.model.requestModel;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class alterFundProjectReq {
 
     private String name;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date projectDate;
 
     private String principal;
