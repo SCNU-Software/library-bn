@@ -22,6 +22,12 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${loginProcessURL}")
     private String loginProcessURL;
 
+    @Value("${registerURL}")
+    private String registerURL;
+
+    @Autowired
+    private userDetailService userDetailService;
+
     @Autowired
     private authFailHandler authFailHandler;
 
@@ -42,7 +48,8 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(loginEntryHandler)    // 检测到请求不带登陆Session后跳转到登陆页面
             .and()
             .authorizeRequests()    // 对请求授权
-            .antMatchers(loginProcessURL).permitAll()    // 不需要授权的白名单
+            .antMatchers(loginProcessURL, registerURL).permitAll()    // 不需要授权的白名单
+            .antMatchers("/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/*", "/csrf").permitAll()  // Swagger-ui白名单
             .anyRequest().authenticated()   // 所有不在白名单中的请求都需要登陆验证
             .and()
             .csrf().disable().cors();  // 关闭CSRF跨站检测，使用CORS解决跨域问题
@@ -50,13 +57,8 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 用户、密码、用户角色(权限)
-        auth.inMemoryAuthentication()
-                .withUser("user1").password(new BCryptPasswordEncoder().encode("psw1")).roles("USER")
-                .and()
-                .withUser("user2").password(new BCryptPasswordEncoder().encode("psw2")).roles("ADMIN","USER")
-                .and()
-                .passwordEncoder(new BCryptPasswordEncoder());
+        // 登录服务Handler，设定密码加密规则
+        auth.userDetailsService(userDetailService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
 }
